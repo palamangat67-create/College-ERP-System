@@ -1,0 +1,228 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>View Students</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#0f172a,#1e3a8a,#2563eb);
+padding:40px;
+}
+
+.container{
+max-width:1400px;
+margin:auto;
+background:#fff;
+border-radius:20px;
+padding:30px;
+box-shadow:0 20px 40px rgba(0,0,0,.25);
+}
+
+.heading{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+}
+
+.heading h1{
+color:#1e3a8a;
+}
+
+.btn{
+background:#2563eb;
+color:#fff;
+padding:12px 25px;
+border-radius:10px;
+text-decoration:none;
+font-weight:bold;
+transition:.3s;
+}
+
+.btn:hover{
+background:#1d4ed8;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+overflow:hidden;
+}
+
+thead{
+background:#2563eb;
+color:#fff;
+}
+
+th,td{
+padding:15px;
+text-align:center;
+border-bottom:1px solid #ddd;
+}
+
+tbody tr:hover{
+background:#f1f5f9;
+}
+
+img{
+width:70px;
+height:70px;
+border-radius:50%;
+object-fit:cover;
+border:3px solid #2563eb;
+}
+
+.action a{
+padding:8px 15px;
+text-decoration:none;
+border-radius:8px;
+margin:0 3px;
+font-size:14px;
+}
+
+.edit{
+background:#22c55e;
+color:white;
+}
+
+.delete{
+background:#ef4444;
+color:white;
+}
+
+@media(max-width:1000px){
+
+table{
+display:block;
+overflow-x:auto;
+white-space:nowrap;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="heading">
+
+<h1>
+<i class="fa-solid fa-users"></i>
+Student Records
+</h1>
+
+<a href="{% url 'AddStudent' %}" class="btn">
+<i class="fa-solid fa-plus"></i>
+Add Student
+</a>
+
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Photo</th>
+<th>Roll No</th>
+<th>Name</th>
+<th>Course</th>
+<th>Semester</th>
+<th>Gender</th>
+<th>Email</th>
+<th>Mobile</th>
+<th>Blood Group</th>
+<th>Status</th>
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for student in students %}
+
+<tr>
+
+<td>
+{% if student.photo %}
+<img src="{{ student.photo.url }}">
+{% else %}
+<img src="https://via.placeholder.com/70">
+{% endif %}
+</td>
+
+<td>{{ student.roll_no }}</td>
+
+<td>{{ student.student_name }}</td>
+
+<td>{{ student.course }}</td>
+
+<td>{{ student.semester }}</td>
+
+<td>{{ student.gender }}</td>
+
+<td>{{ student.email }}</td>
+
+<td>{{ student.mobile }}</td>
+
+<td>{{ student.blood_group }}</td>
+
+<td>
+<span style="color:green;font-weight:bold;">
+Active
+</span>
+</td>
+
+<td class="action">
+<a href="{% url 'student_profile' student.id %}">Profile</a>
+
+<a href="{% url 'EditStudent' student.id %}">Edit</a>
+
+<a href="{% url 'DeleteStudent' student.id %}">Delete</a>
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="11">
+No Students Found
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,150 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mark Attendance</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+        }
+
+        .container {
+            width: 90%;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            color: #0b1f4d;
+            margin-bottom: 25px;
+        }
+
+        .date-box {
+            margin-bottom: 20px;
+        }
+
+        input[type="date"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #0b1f4d;
+            color: white;
+            padding: 14px;
+        }
+
+        td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .present {
+            color: green;
+            font-weight: bold;
+        }
+
+        .absent {
+            color: red;
+            font-weight: bold;
+        }
+
+        .btn {
+            margin-top: 25px;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 7px;
+            background: #0b1f4d;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background: #163b82;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Mark Student Attendance</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="date-box">
+            <label><b>Attendance Date:</b></label>
+            <input type="date" name="date" required>
+        </div>
+
+        <table>
+
+            <tr>
+                <th>Roll No</th>
+                <th>Student Name</th>
+                <th>Attendance</th>
+            </tr>
+
+            {% for student in students %}
+
+            <tr>
+                <td>{{ student.roll_no }}</td>
+
+                <td>
+                    {{ student.student_name }}
+                </td>
+
+                <td>
+                    <label class="present">
+                        <input
+                            type="radio"
+                            name="status_{{ student.id }}"
+                            value="Present"
+                            required
+                        >
+                        Present
+                    </label>
+
+                    &nbsp;&nbsp;
+
+                    <label class="absent">
+                        <input
+                            type="radio"
+                            name="status_{{ student.id }}"
+                            value="Absent"
+                        >
+                        Absent
+                    </label>
+                </td>
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+        <button type="submit" class="btn">
+            Save Attendance
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

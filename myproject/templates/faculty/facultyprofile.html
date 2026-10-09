@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Faculty Profile</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI,sans-serif;
+}
+
+body{
+background:#eef2ff;
+}
+
+.container{
+width:95%;
+margin:30px auto;
+display:flex;
+gap:25px;
+}
+
+/* Left Panel */
+
+.left{
+
+width:320px;
+background:linear-gradient(180deg,#0f172a,#2563eb);
+color:#fff;
+padding:30px;
+border-radius:20px;
+text-align:center;
+
+}
+
+.left img{
+
+width:180px;
+height:180px;
+border-radius:50%;
+border:5px solid white;
+object-fit:cover;
+margin-bottom:20px;
+
+}
+
+.left h2{
+margin-bottom:8px;
+}
+
+.left p{
+margin-bottom:10px;
+}
+
+.info{
+margin-top:20px;
+text-align:left;
+}
+
+.info div{
+
+padding:12px;
+background:rgba(255,255,255,.15);
+margin-bottom:12px;
+border-radius:10px;
+
+}
+
+/* Right */
+
+.right{
+
+flex:1;
+
+}
+
+.card{
+
+background:white;
+padding:25px;
+border-radius:20px;
+margin-bottom:20px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+
+}
+
+.card h2{
+
+color:#2563eb;
+margin-bottom:20px;
+
+}
+
+table{
+
+width:100%;
+border-collapse:collapse;
+
+}
+
+td{
+
+padding:14px;
+border-bottom:1px solid #ddd;
+
+}
+
+.label{
+
+font-weight:bold;
+width:220px;
+
+}
+
+.btn{
+padding:8px 16px;
+text-decoration:none;
+border-radius:6px;
+color:white;
+margin-right:5px;
+font-size:14px;
+}
+
+.profile{
+background:#2563eb;
+}
+
+.edit{
+background:#16a34a;
+}
+
+.delete{
+background:#dc2626;
+}
+
+.profile:hover{
+background:#1d4ed8;
+}
+
+.edit:hover{
+background:#15803d;
+}
+
+.delete:hover{
+background:#b91c1c;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="left">
+
+{% if faculty.photo %}
+
+<img src="{{ faculty.photo.url }}">
+
+{% else %}
+
+<img src="https://via.placeholder.com/180">
+
+{% endif %}
+
+<h2>{{ faculty.faculty_name }}</h2>
+
+<p>{{ faculty.designation }}</p>
+
+<div class="info">
+
+<div>
+
+<b>Employee ID</b><br>
+
+{{ faculty.employee_id }}
+
+</div>
+
+<div>
+
+<b>Department</b><br>
+
+{{ faculty.department }}
+
+</div>
+
+<div>
+
+<b>Email</b><br>
+
+{{ faculty.email }}
+
+</div>
+
+<div>
+
+<b>Mobile</b><br>
+
+{{ faculty.mobile }}
+
+</div>
+
+</div>
+
+</div>
+
+<div class="right">
+
+<div class="card">
+
+<h2>Personal Information</h2>
+
+<table>
+
+<tr>
+
+<td class="label">Faculty Name</td>
+
+<td>{{ faculty.faculty_name }}</td>
+
+</tr>
+
+<tr>
+
+<td class="label">Gender</td>
+
+<td>{{ faculty.gender }}</td>
+
+</tr>
+
+<tr>
+
+<td class="label">Date of Birth</td>
+
+<td>{{ faculty.dob }}</td>
+
+</tr>
+
+<tr>
+
+<td class="label">Qualification</td>
+
+<td>{{ faculty.qualification }}</td>
+
+</tr>
+
+<tr>
+
+<td class="label">Experience</td>
+
+<td>{{ faculty.experience }} Years</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<div class="card">
+
+<h2>Professional Information</h2>
+
+<table>
+
+<tr>
+
+<td class="label">Employee ID</td>
+
+<td>{{ faculty.employee_id }}</td>
+
+</tr>
+
+<tr>
+
+<td class="label">Department</td>
+
+<td>{{ faculty.department }}</td>
+
+</tr>
+
+<tr>
+
+<td class="label">Designation</td>
+
+<td>{{ faculty.designation }}</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<div class="card">
+
+<h2>Contact Information</h2>
+
+<table>
+
+<tr>
+
+<td class="label">Email</td>
+
+<td>{{ faculty.email }}</td>
+
+</tr>
+
+<tr>
+
+<td class="label">Mobile</td>
+
+<td>{{ faculty.mobile }}</td>
+
+</tr>
+
+<tr>
+
+<td class="label">Address</td>
+
+<td>{{ faculty.address }}</td>
+
+</tr>
+
+</table>
+
+</div>
+
+<td>
+
+<a href="{% url 'FacultyProfile' faculty.id %}" class="btn profile">
+    Profile
+</a>
+
+<a href="{% url 'EditFaculty' faculty.id %}" class="btn edit">
+    Edit
+</a>
+
+<a href="{% url 'DeleteFaculty' faculty.id %}"
+onclick="return confirm('Are you sure you want to delete this faculty?')"
+class="btn delete">
+    Delete
+</a>
+
+</td>
+</div>
+
+</div>
+
+</body>
+</html>

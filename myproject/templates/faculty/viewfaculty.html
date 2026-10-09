@@ -1,0 +1,223 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>View Faculty</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#0f172a,#1e3a8a,#2563eb);
+padding:40px;
+}
+
+.container{
+max-width:1400px;
+margin:auto;
+background:#fff;
+border-radius:20px;
+padding:30px;
+box-shadow:0 20px 40px rgba(0,0,0,.25);
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+}
+
+.header h1{
+color:#1e3a8a;
+}
+
+.btn{
+background:#2563eb;
+color:#fff;
+padding:12px 25px;
+text-decoration:none;
+border-radius:10px;
+font-weight:bold;
+transition:.3s;
+}
+
+.btn:hover{
+background:#1d4ed8;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+thead{
+background:#2563eb;
+color:#fff;
+}
+
+th,td{
+padding:15px;
+text-align:center;
+border-bottom:1px solid #ddd;
+}
+
+tbody tr:hover{
+background:#f8fafc;
+}
+
+img{
+width:70px;
+height:70px;
+border-radius:50%;
+object-fit:cover;
+border:3px solid #2563eb;
+}
+
+.action a{
+padding:8px 12px;
+border-radius:8px;
+text-decoration:none;
+color:white;
+margin:0 3px;
+}
+
+
+
+@media(max-width:900px){
+
+table{
+display:block;
+overflow-x:auto;
+white-space:nowrap;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<h1>
+<i class="fa-solid fa-chalkboard-user"></i>
+Faculty Records
+</h1>
+
+<a href="{% url 'Addfaculty' %}" class="btn">
+<i class="fa-solid fa-plus"></i>
+Add Faculty
+</a>
+
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Photo</th>
+<th>Faculty ID</th>
+<th>Name</th>
+<th>Department</th>
+<th>Designation</th>
+<th>Qualification</th>
+<th>Email</th>
+<th>Mobile</th>
+<th>Experience</th>
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for faculty in faculties %}
+
+<tr>
+
+<td>
+
+{% if faculty.photo %}
+<img src="{{ faculty.photo.url }}">
+{% else %}
+<img src="https://via.placeholder.com/70">
+{% endif %}
+
+</td>
+
+<td>{{ faculty.faculty_id }}</td>
+
+<td>{{ faculty.faculty_name }}</td>
+
+<td>{{ faculty.department }}</td>
+
+<td>{{ faculty.designation }}</td>
+
+<td>{{ faculty.qualification }}</td>
+
+<td>{{ faculty.email }}</td>
+
+<td>{{ faculty.mobile }}</td>
+
+<td>{{ faculty.experience }} Years</td>
+
+<td>
+
+<a href="{% url 'FacultyProfile' faculty.id %}" class="profile">
+    Profile
+</a>
+
+<a href="{% url 'EditFaculty' faculty.id %}" class="edit">
+    Edit
+</a>
+
+<a href="{% url 'DeleteFaculty' faculty.id %}"
+onclick="return confirm('Are you sure you want to delete this faculty?')"
+class="delete">
+    Delete
+</a>
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="10">
+No Faculty Records Found
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</body>
+</html>

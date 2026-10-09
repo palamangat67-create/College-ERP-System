@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Student Profile</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI,sans-serif;
+}
+
+body{
+
+background:#edf2f7;
+
+}
+
+.container{
+
+width:95%;
+margin:30px auto;
+display:flex;
+gap:25px;
+
+}
+
+/* LEFT PROFILE */
+
+.left{
+
+width:320px;
+background:linear-gradient(180deg,#1e3a8a,#2563eb);
+color:white;
+border-radius:20px;
+padding:30px;
+text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,.15);
+
+}
+
+.left img{
+
+width:180px;
+height:180px;
+border-radius:50%;
+border:6px solid white;
+object-fit:cover;
+margin-bottom:20px;
+
+}
+
+.left h2{
+
+margin-bottom:8px;
+
+}
+
+.left p{
+
+opacity:.9;
+
+}
+
+.profile-info{
+
+margin-top:30px;
+text-align:left;
+
+}
+
+.profile-info div{
+
+margin:15px 0;
+padding:12px;
+background:rgba(255,255,255,.15);
+border-radius:10px;
+
+}
+
+/* RIGHT */
+
+.right{
+
+flex:1;
+
+}
+
+.card{
+
+background:white;
+padding:25px;
+border-radius:20px;
+margin-bottom:20px;
+box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+.card h2{
+
+color:#1e40af;
+margin-bottom:20px;
+border-left:5px solid #2563eb;
+padding-left:10px;
+
+}
+
+table{
+
+width:100%;
+border-collapse:collapse;
+
+}
+
+table td{
+
+padding:14px;
+border-bottom:1px solid #ddd;
+
+}
+
+.label{
+
+font-weight:bold;
+color:#1e3a8a;
+width:220px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- LEFT PANEL -->
+
+<div class="left">
+
+{% if student.photo %}
+
+<img src="{{ student.photo.url }}">
+
+{% else %}
+
+<img src="https://via.placeholder.com/180">
+
+{% endif %}
+
+<h2>{{ student.student_name }}</h2>
+
+<p>{{ student.course }}</p>
+
+<div class="profile-info">
+
+<div>
+
+<b>Roll No</b><br>
+
+{{ student.roll_no }}
+
+</div>
+
+<div>
+
+<b>Semester</b><br>
+
+{{ student.semester }}
+
+</div>
+
+<div>
+
+<b>Email</b><br>
+
+{{ student.email }}
+
+</div>
+
+<div>
+
+<b>Mobile</b><br>
+
+{{ student.mobile }}
+
+</div>
+
+</div>
+
+</div>
+
+<!-- RIGHT PANEL -->
+
+<div class="right">
+
+<div class="card">
+
+<h2>
+
+<i class="fa fa-user"></i>
+
+Personal Information
+
+</h2>
+
+<table>
+    <!-- Personal Information -->
+
+<tr>
+<td class="label">Student Name</td>
+<td>{{ student.student_name }}</td>
+</tr>
+
+<tr>
+<td class="label">Father Name</td>
+<td>{{ student.father_name }}</td>
+</tr>
+
+<tr>
+<td class="label">Mother Name</td>
+<td>{{ student.mother_name }}</td>
+</tr>
+
+<tr>
+<td class="label">Gender</td>
+<td>{{ student.gender }}</td>
+</tr>
+
+<tr>
+<td class="label">Date of Birth</td>
+<td>{{ student.dob }}</td>
+</tr>
+
+<tr>
+<td class="label">Blood Group</td>
+<td>{{ student.blood_group }}</td>
+</tr>
+
+</table>
+
+</div>
+
+<!-- Academic Information -->
+
+<div class="card">
+
+<h2>
+
+<i class="fa-solid fa-graduation-cap"></i>
+
+Academic Information
+
+</h2>
+
+<table>
+
+<tr>
+<td class="label">Roll Number</td>
+<td>{{ student.roll_no }}</td>
+</tr>
+
+<tr>
+<td class="label">Course</td>
+<td>{{ student.course }}</td>
+</tr>
+
+<tr>
+<td class="label">Semester</td>
+<td>{{ student.semester }}</td>
+</tr>
+
+</table>
+
+</div>
+
+<!-- Contact Information -->
+
+<div class="card">
+
+<h2>
+
+<i class="fa-solid fa-address-book"></i>
+
+Contact Information
+
+</h2>
+
+<table>
+
+<tr>
+<td class="label">Email</td>
+<td>{{ student.email }}</td>
+</tr>
+
+<tr>
+<td class="label">Mobile Number</td>
+<td>{{ student.mobile }}</td>
+</tr>
+
+<tr>
+<td class="label">Address</td>
+<td>{{ student.address }}</td>
+</tr>
+
+</table>
+
+</div>
+
+<!-- Facilities -->
+
+<div class="card">
+
+<h2>
+
+<i class="fa-solid fa-building"></i>
+
+Facilities
+
+</h2>
+
+<table>
+
+<tr>
+<td class="label">Hostel</td>
+<td>{{ student.hostel }}</td>
+</tr>
+
+<tr>
+<td class="label">Transport</td>
+<td>{{ student.transport }}</td>
+</tr>
+
+</table>
+
+</div>
+
+<!-- Action Buttons -->
+
+<div style="text-align:right;margin-top:20px;">
+
+<a href="{% url 'viewstudent' %}"
+style="
+background:#2563eb;
+color:#fff;
+padding:12px 25px;
+text-decoration:none;
+border-radius:8px;
+margin-right:10px;">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+Back
+
+</a>
+
+<a href="{% url 'EditStudent' student.id %}"
+style="
+background:#16a34a;
+color:#fff;
+padding:12px 25px;
+text-decoration:none;
+border-radius:8px;">
+
+<i class="fa-solid fa-pen"></i>
+
+Edit Profile
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

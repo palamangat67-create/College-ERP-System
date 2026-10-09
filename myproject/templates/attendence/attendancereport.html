@@ -1,0 +1,268 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance Report</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        .container {
+            width: 92%;
+            margin: 35px auto;
+        }
+
+        .header {
+            background: #0b1f4d;
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        .header h2 {
+            margin: 0 0 8px;
+        }
+
+        .header p {
+            margin: 0;
+            opacity: 0.8;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .filter {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .filter input,
+        .filter select {
+            padding: 11px;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+        }
+
+        .filter button {
+            background: #0b1f4d;
+            color: white;
+            border: none;
+            padding: 11px 22px;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        .filter button:hover {
+            background: #163b82;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #0b1f4d;
+            color: white;
+            padding: 14px;
+            text-align: center;
+        }
+
+        td {
+            padding: 13px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #f8faff;
+        }
+
+        .present {
+            color: green;
+            font-weight: bold;
+        }
+
+        .absent {
+            color: red;
+            font-weight: bold;
+        }
+
+        .percentage {
+            font-weight: bold;
+        }
+
+        .good {
+            color: green;
+        }
+
+        .average {
+            color: orange;
+        }
+
+        .low {
+            color: red;
+        }
+
+        .no-data {
+            padding: 25px;
+            text-align: center;
+            color: #777;
+        }
+
+        @media(max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+
+            .filter {
+                flex-direction: column;
+            }
+
+            table {
+                font-size: 13px;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h2>Attendance Report</h2>
+        <p>View and monitor student attendance records</p>
+    </div>
+
+    <div class="card">
+
+        <!-- Filter -->
+        <form method="GET" class="filter">
+
+            <input
+                type="text"
+                name="roll_no"
+                placeholder="Search Roll No"
+                value="{{ request.GET.roll_no }}"
+            >
+
+            <select name="course">
+                <option value="">All Courses</option>
+
+                {% for course in courses %}
+                    <option value="{{ course }}"
+                        {% if request.GET.course == course %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ course }}
+                    </option>
+                {% endfor %}
+
+            </select>
+
+            <button type="submit">
+                Search
+            </button>
+
+        </form>
+
+
+        <!-- Attendance Table -->
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Sr. No.</th>
+                    <th>Roll No</th>
+                    <th>Student Name</th>
+                    <th>Total Classes</th>
+                    <th>Present</th>
+                    <th>Absent</th>
+                    <th>Attendance %</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for record in attendance_report %}
+
+                <tr>
+
+                    <td>{{ forloop.counter }}</td>
+
+                    <td>
+                        {{ record.roll_no }}
+                    </td>
+
+                    <td>
+                        {{ record.student_name }}
+                    </td>
+
+                    <td>
+                        {{ record.total }}
+                    </td>
+
+                    <td class="present">
+                        {{ record.present }}
+                    </td>
+
+                    <td class="absent">
+                        {{ record.absent }}
+                    </td>
+
+                    <td class="percentage
+                        {% if record.percentage >= 75 %}
+                            good
+                        {% elif record.percentage >= 50 %}
+                            average
+                        {% else %}
+                            low
+                        {% endif %}
+                    ">
+                        {{ record.percentage }}%
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+                    <td colspan="7" class="no-data">
+                        No attendance records found.
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>

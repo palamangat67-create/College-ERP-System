@@ -1,0 +1,247 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>View Results</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        .container {
+            width: 94%;
+            margin: 35px auto;
+        }
+
+        .header {
+            background: #0b1f4d;
+            color: white;
+            padding: 25px 30px;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .header h2 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .header p {
+            margin: 8px 0 0;
+            opacity: 0.8;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 950px;
+        }
+
+        th {
+            background: #0b1f4d;
+            color: white;
+            padding: 14px 10px;
+            text-align: center;
+        }
+
+        td {
+            padding: 13px 10px;
+            text-align: center;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        tr:hover {
+            background: #f7f9fc;
+        }
+
+        .marks {
+            font-weight: bold;
+        }
+
+        .pass {
+            color: green;
+            font-weight: bold;
+        }
+
+        .fail {
+            color: red;
+            font-weight: bold;
+        }
+
+        .grade {
+            font-weight: bold;
+            color: #0b1f4d;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+        }
+
+        .add-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 11px 20px;
+            background: #0b1f4d;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+        }
+
+        .add-btn:hover {
+            background: #163b82;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <h2>Student Results</h2>
+
+        <p>View all examination results</p>
+
+    </div>
+
+
+    <div class="card">
+
+        <a href="{% url 'addresult' %}" class="add-btn">
+            + Add Result
+        </a>
+
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Sr. No.</th>
+                    <th>Roll No.</th>
+                    <th>Student Name</th>
+                    <th>Semester</th>
+                    <th>Subject</th>
+                    <th>Exam Type</th>
+                    <th>Max Marks</th>
+                    <th>Marks Obtained</th>
+                    <th>Percentage</th>
+                    <th>Grade</th>
+                    <th>Status</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for result in results %}
+
+                <tr>
+
+                    <td>
+                        {{ forloop.counter }}
+                    </td>
+
+                    <td>
+                        {{ result.student.roll_no }}
+                    </td>
+
+                    <td>
+                        {{ result.student.student_name }}
+                    </td>
+
+                    <td>
+                        {{ result.semester }}
+                    </td>
+
+                    <td>
+                        {{ result.subject }}
+                    </td>
+
+                    <td>
+                        {{ result.exam_type }}
+                    </td>
+
+                    <td>
+                        {{ result.max_marks }}
+                    </td>
+
+                    <td class="marks">
+                        {{ result.marks_obtained }}
+                    </td>
+
+                    <td>
+                        {% widthratio result.marks_obtained result.max_marks 100 %}%
+                    </td>
+
+                    <td class="grade">
+
+                       {{ result.grade }}
+
+                    </td>
+
+                    <td>
+
+                        {% if result.marks_obtained >= 40 %}
+
+                            <span class="pass">
+                                PASS
+                            </span>
+
+                        {% else %}
+
+                            <span class="fail">
+                                FAIL
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="11" class="empty">
+                        No results found.
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>

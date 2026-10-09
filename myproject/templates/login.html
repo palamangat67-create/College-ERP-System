@@ -1,0 +1,290 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>College ERP | Sign In</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:30px;
+    background:linear-gradient(135deg,#081C3A,#123C8C,#2563EB);
+    background-size:300% 300%;
+    animation:bgMove 12s ease infinite;
+}
+
+@keyframes bgMove{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+.container{
+    width:950px;
+    max-width:100%;
+    display:grid;
+    grid-template-columns:45% 55%;
+    background:#fff;
+    border-radius:25px;
+    overflow:hidden;
+    box-shadow:0 25px 60px rgba(0,0,0,.35);
+    animation:show .8s ease;
+}
+
+@keyframes show{
+    from{opacity:0;transform:translateY(40px);}
+    to{opacity:1;transform:translateY(0);}
+}
+
+/* LEFT PANEL */
+
+.left{
+    background:linear-gradient(180deg,#2563EB,#0F172A);
+    padding:60px 45px;
+    color:#fff;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.logo{
+    width:90px;
+    height:90px;
+    border-radius:20px;
+    background:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:42px;
+}
+
+.left h1{
+    margin-top:25px;
+    font-size:40px;
+}
+
+.left p{
+    margin-top:18px;
+    line-height:30px;
+    font-size:16px;
+    opacity:.95;
+}
+
+.features{
+    margin-top:40px;
+}
+
+.features div{
+    margin:18px 0;
+    font-size:17px;
+}
+
+/* RIGHT PANEL */
+
+.right{
+    padding:45px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.right h2{
+    text-align:center;
+    font-size:34px;
+    color:#0F172A;
+}
+
+.subtitle{
+    text-align:center;
+    margin-top:8px;
+    margin-bottom:30px;
+    color:#64748B;
+}
+
+.input-box{
+    margin-bottom:22px;
+}
+
+.input-box input{
+    width:100%;
+    padding:16px 18px;
+    font-size:15px;
+    border:2px solid #D6E4FF;
+    border-radius:12px;
+    outline:none;
+    transition:.3s;
+}
+
+.input-box input:focus{
+    border-color:#2563EB;
+    box-shadow:0 0 15px rgba(37,99,235,.18);
+}
+
+.options{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:#64748B;
+    font-size:14px;
+    margin-bottom:25px;
+}
+
+.options input{
+    accent-color:#2563eb;
+}
+
+.options a{
+    color:#2563eb;
+    text-decoration:none;
+}
+
+.options a:hover{
+    text-decoration:underline;
+}
+
+button{
+    width:100%;
+    padding:16px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(90deg,#2563eb,#1d4ed8);
+    color:#fff;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 25px rgba(37,99,235,.35);
+}
+
+.msg{
+    margin-bottom:22px;
+    padding:12px 16px;
+    border-radius:12px;
+    background:#fee2e2;
+    color:#b91c1c;
+    font-size:14px;
+    text-align:center;
+}
+
+.signup{
+    margin-top:22px;
+    text-align:center;
+    color:#666;
+}
+
+.signup a{
+    color:#2563eb;
+    font-weight:bold;
+    text-decoration:none;
+}
+
+.signup a:hover{
+    text-decoration:underline;
+}
+
+/* Responsive */
+
+@media(max-width:900px){
+
+.container{
+    grid-template-columns:1fr;
+}
+
+.left{
+    text-align:center;
+    align-items:center;
+    padding:40px;
+}
+
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+    <div class="left">
+
+        <div class="logo">🎓</div>
+
+        <h1>College ERP</h1>
+
+        <p>
+        Welcome to the smart College ERP Portal.
+        Manage students, faculty, attendance, results,
+        and academic records from one place.
+        </p>
+
+        <div class="features">
+            <div>✔ Student Management</div>
+            <div>✔ Faculty Portal</div>
+            <div>✔ Attendance Tracking</div>
+            <div>✔ Results & Reports</div>
+            <div>✔ Secure Login System</div>
+        </div>
+
+    </div>
+
+    <div class="right">
+
+        <h2>Sign In</h2>
+
+        <p class="subtitle">Welcome back, please login to continue</p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            {% if msg %}
+            <p class="msg">{{ msg }}</p>
+            {% endif %}
+
+            <div class="input-box">
+                <input type="email" name="email" placeholder="📧 Email Address" required>
+            </div>
+
+            <div class="input-box">
+                <input type="password" name="password" placeholder="🔒 Password" required>
+            </div>
+
+            <div class="options">
+                <label>
+                    <input type="checkbox"> Remember Me
+                </label>
+
+                <a href="#">Forgot Password?</a>
+            </div>
+
+            <button type="submit">Sign In</button>
+
+            <div class="signup">
+                Don't have an account?
+                <a href="{% url 'signup' %}">Create Account</a>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% include "alerts.html" %}
+
+</body>
+</html>
